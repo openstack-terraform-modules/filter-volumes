@@ -1,7 +1,3 @@
-#
-#!/usr/bin/env -S pkgx +jq^1.7 +bash^5 bash
-#
-
 INPUT="$( [[ -p /dev/stdin ]] && cat - || echo "$@" )"
 
 MODULE_PATH="$( dirname "${BASH_SOURCE[0]}" )"
@@ -12,6 +8,7 @@ INVENTORY_FILE_PATH="$(
     printf '%s' "${INPUT}"\
   | jq --raw-input '.inventoity_file_path' 
 )" 
+
 DEBUG_FILE_PATH="${PROJECT_PATH}/get-volumes.log"
 
 printf '[%s] INPUT: %s\n' \
@@ -19,10 +16,6 @@ printf '[%s] INPUT: %s\n' \
        "${INPUT}" \
     >> "${DEBUG_FILE_PATH}"
 
-DEPLOYMENT_UUID="$(
-    printf '%s' "${INPUT}" \
-  | jq --raw-output '.deployment_uuid'
-)"
 CLUSTER_PREFIX="$(
     printf '%s' "${INPUT}" \
   | jq --raw-output '.cluster_prefix'
@@ -34,31 +27,16 @@ GROUP_PREFIX="$(
 
 OUTPUT_FILE_PATH="${PROJECT_PATH}/get-volumes-${GROUP_PREFIX}.json"
 
-VOLUMES="$(
-  openstack \
-    --os-cloud "${OS_CLOUD}" \
-    volume list \
-    --format json \
-    --long
-)"
-
-printf '[%s] VOLUMES: %s' \
-       "${HORODATE}" \
-       "${VOLUMES}" \
-     >> "${DEBUG_FILE_PATH}"
-
 VOLUMES_FILTER='
-map(select(.Properties.DEPLOYMENT_UUID==$deployment_uuid
-       and .Properties.CLUSTER_PREFIX==$cluster_prefix
+map(select(.Properties.CLUSTER_PREFIX==$cluster_prefix
        and .Properties.GROUP_PREFIX==$group_prefix)
   | { "\(.Properties.GROUP_INDEX)": "\(.ID)" }
 ) | add
 '
 
 FILTERED_VOLUMES="$(
-    printf "%s" "${VOLUMES}" \
-  | jq --arg deployment_uuid "${DEPLOYMENT_UUID}" \
-       --arg cluster_prefix "${CLUSTER_PREFIX}" \
+    cat "${INVENTORY_FILE_PATH}" \
+  | jq --arg cluster_prefix "${CLUSTER_PREFIX}" \
        --arg group_prefix "${GROUP_PREFIX}" \
        "${VOLUMES_FILTER}"
 )"
