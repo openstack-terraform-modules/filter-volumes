@@ -5,8 +5,8 @@ PROJECT_PATH="$( realpath "${MODULE_PATH}/../../../" )"
 HORODATE="$(date)"
 
 INVENTORY_FILE_PATH="$(
-    printf '%s' "${INPUT}"\
-  | jq --raw-input '.inventory_file_path' 
+    printf '%s' "${INPUT}" \
+  | jq --raw-output '.inventory_file_path' 
 )" 
 
 DEBUG_FILE_PATH="${PROJECT_PATH}/get-volumes.log"
