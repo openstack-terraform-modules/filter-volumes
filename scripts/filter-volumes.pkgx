@@ -6,7 +6,7 @@ HORODATE="$(date)"
 
 INVENTORY_FILE_PATH="$(
     printf '%s' "${INPUT}"\
-  | jq --raw-input '.inventoity_file_path' 
+  | jq --raw-input '.inventory_file_path' 
 )" 
 
 DEBUG_FILE_PATH="${PROJECT_PATH}/get-volumes.log"
