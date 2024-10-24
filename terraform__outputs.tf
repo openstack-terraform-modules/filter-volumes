@@ -3,5 +3,5 @@ output volumes {
 }
 
 output group_prefix {
-    value = keys(tomap(data.external.filter-volumes.result))
+    value = keys(data.external.filter-volumes.result)
 }
