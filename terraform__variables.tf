@@ -1,3 +1,12 @@
+variable deployment {
+    type = object({
+      id = string
+      uuid = string
+      tenant_name = string
+      domain_name = string
+    })
+}
+
 variable inventory_file_path {
     type = string
 }

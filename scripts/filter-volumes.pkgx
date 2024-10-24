@@ -7,7 +7,12 @@ HORODATE="$(date)"
 INVENTORY_FILE_PATH="$(
     printf '%s' "${INPUT}" \
   | jq --raw-output '.inventory_file_path' 
-)" 
+)"
+
+DEPLOYMENT_UUID="$(
+    printf '%s' "${INPUT}" \
+  | jq --raw-output '.deployment_uuid'
+)"
 
 DEBUG_FILE_PATH="${PROJECT_PATH}/get-volumes.log"
 
@@ -25,7 +30,7 @@ GROUP_PREFIX="$(
   | jq --raw-output '.group_prefix'
 )"
 
-OUTPUT_FILE_PATH="${PROJECT_PATH}/get-volumes-${GROUP_PREFIX}.json"
+OUTPUT_FILE_PATH="${PROJECT_PATH}/get-volumes-${DEPLOYMENT_UUID}-${GROUP_PREFIX}.json"
 
 VOLUMES_FILTER='
 map(select(.Properties.CLUSTER_PREFIX==$cluster_prefix
