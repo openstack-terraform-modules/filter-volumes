@@ -9,7 +9,7 @@ data external filter-volumes {
 
     query = {
         inventory_file_path = local.inventory_file_path
-        deployment_uuid = local.deployment_uuid
+        deployment_uuid = local.deployment.uuid
         cluster_prefix = local.cluster_prefix
         group_prefix = local.group_prefix
         volume_name = local.volume_name
