@@ -30,6 +30,8 @@ variable group_prefix {
     type = string
 }
 
+/*
 variable volume_name {
     type = string
 }
+*/
