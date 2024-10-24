@@ -1,3 +1,3 @@
 output volumes {
-    value = data.external.filter-volumes.result
+    value = data.external.filter-volumes.*.result
 }
