@@ -9,7 +9,7 @@ variable get-volumes {
         inventory_file_path = string
     })
 }
-
+/*
 variable deployment {
     type = object({
       id = string
@@ -22,7 +22,7 @@ variable deployment {
 variable inventory_file_path {
     type = string
 }
-
+*/
 variable cluster_prefix {
     type = string
 }
