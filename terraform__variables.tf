@@ -7,6 +7,8 @@ variable get-volumes {
             domain_name = string
         })
         inventory_file_path = string
+        cluster_prefix = string
+        volume_name = string
     })
 }
 /*
@@ -23,9 +25,6 @@ variable inventory_file_path {
     type = string
 }
 */
-variable cluster_prefix {
-    type = string
-}
 
 variable group_prefix {
     type = string
